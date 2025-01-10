@@ -5,7 +5,7 @@ public class VariablesEx {
 /*
  * Notes about variables:-
  * ----------------------
- * 0. What is th use variables
+ * 0. What is the use variables
  * 1. Types of variables
  * 2. Declaring variables
  * 3. Initialization of variables
@@ -47,7 +47,7 @@ public class VariablesEx {
         // Declaring more than one variable at a time
         int a, b, c;
 
-        // Inilization of more than one variable at a time
+        // Initialization of more than one variable at a time
         a = b = c = 10;
 
         //Printing values of variables that holding
@@ -55,11 +55,12 @@ public class VariablesEx {
         System.out.println("isAdult :"+ isAdult);
         System.out.println("a :"+ a);
 
-        //Callig static method
+        //Calling static method
         printName();
     }
 
     public static void printName() {
+    
         //Printing global variable value
         System.out.println("Inside print" + age);
     }

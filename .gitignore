@@ -2,6 +2,10 @@
 *.class
 bin
 
+# IDE
+
+.vscode
+
 # Log file
 *.log
 .classpath
