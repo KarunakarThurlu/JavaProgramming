@@ -4,7 +4,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -13,15 +15,14 @@ import pojo.Employee;
 
 public class PojoChallenges {
 	public static void main(String[] args) {
-		List<Employee> empList = List.of(new Employee(1, "Tarun", "IT", 68000.00),
-				new Employee(2, "varun", "IT", 72000.00), new Employee(3, "karun", "Finance", 68000.00),
+		Set<Employee> empList = Set.of(new Employee(1, "Tarun", "IT", 68000.00),
+				new Employee(2, "Varun", "IT", 88000.00), new Employee(3, "karun", "Finance", 68000.00),
 				new Employee(4, "Meanon", "HR", 48000.00), new Employee(5, "Jeevan", "HR", 37000.00),
 				new Employee(6, "Jeevan", "HR", 68000.00), new Employee(7, "Kiran", "Sales", 88000.00),
 				new Employee(8, "Tarun", "IT", 78000.00));
-		Employee employeesByDepartment = higestSalaryEmployee.apply(empList);
-		// employeesByDepartment.forEach(e->System.out.println(e));
-		System.out.println(employeesByDepartment);
-
+		StringBuilder s1=new StringBuilder("Java");
+		StringBuilder s2=new StringBuilder("Java");
+		System.out.println(s1.equals(s2));
 	}
 
 	static Function<Employee, Integer> id = Employee::getId;
@@ -30,7 +31,7 @@ public class PojoChallenges {
 	static Function<Employee, String> name = Employee::getName;
 
 	// Q1. Sort Employee Name if Names are same sort by Salary
-	static Function<List<Employee>, List<Employee>> sortByNameSalary = (empList) -> {
+	static UnaryOperator<List<Employee>> sortByNameSalary = (empList) -> {
 		return empList.stream().sorted(Comparator.comparing(name).thenComparing(salary)).toList();
 	};
 
@@ -91,5 +92,29 @@ public class PojoChallenges {
 	static Function<List<Employee>, Map<Integer, String>> listToMap = empList -> {
 		return empList.stream().collect(Collectors.toMap(id, name));
 	};
-
+	
+	// Q12. Find average salary of each department
+	static Function<List<Employee>, Map<String,Double>> findAverageSalryOfDept = empList -> {
+		return empList.stream().collect(Collectors.groupingBy(department,Collectors.averagingDouble(Employee::getSalary)));
+	};
+	
+	// Q13. Find Employee count in each department
+	static Function<List<Employee>, Map<String,Long>> findEmpCountByDept = empList -> {
+		return empList.stream().collect(Collectors.groupingBy(department,Collectors.counting()));
+	};
+	
+	// Q14. Find Sum of Salaries in each department
+	static Function<List<Employee>, Map<String,Double>> findSalariesSumByByDept = empList -> {
+		return empList.stream().collect(Collectors.groupingBy(department,Collectors.summingDouble(Employee::getSalary)));
+	};
+	
+	// Q15. Group Employee names by department
+	static Function<List<Employee>, Map<String,List<String>>> groupEmpNamesByByDept = empList -> {
+		return empList.stream().collect(Collectors.groupingBy(department,Collectors.mapping(Employee::getName,Collectors.toList())));
+	};
+	
+	// Q16. Extract All Employee names
+	static Function<List<Employee>, List<String>> extractEmployeeNames = empList -> {
+		return empList.stream().map(name).toList();
+	};
 }

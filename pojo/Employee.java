@@ -1,12 +1,14 @@
 package pojo;
 
+import java.util.Objects;
+
 public class Employee {
-	
+
 	private Integer id;
 	private String name;
 	private String department;
 	private Double salary;
-	
+
 	public Employee() {
 		super();
 	}
@@ -17,6 +19,22 @@ public class Employee {
 		this.name = name;
 		this.department = department;
 		this.salary = salary;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, department, salary);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Employee employee = (Employee) obj;
+		return id.equals(employee.id) && name.equals(employee.name) && department.equals(employee.department)
+				&& salary.equals(employee.salary);
 	}
 
 	public Integer getId() {
@@ -53,9 +71,6 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", department=" + department + ", salary=" + salary + "]";
+		return "{ id : " + id + ", name : " + name + ", department : " + department + ", salary : " + salary + " }";
 	}
-	
-	
-	
 }
